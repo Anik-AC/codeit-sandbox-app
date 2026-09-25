@@ -1,0 +1,9 @@
+# How CodeIt's agents build and check this repo (CodeIt PRD 16.4).
+commands:
+  install: npm ci
+  lint: npm run lint
+  typecheck: npm run typecheck
+  unit: npm test -- --run
+  e2e: npx playwright test
+test_globs: ["tests/**/*.test.ts", "tests/**/*.test.tsx", "e2e/**/*.ts"]
+never_auto_rebase: ["**/migrations/**", "package-lock.json", ".github/**"]
