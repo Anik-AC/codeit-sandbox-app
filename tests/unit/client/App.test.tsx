@@ -32,7 +32,7 @@ describe("App", () => {
       ),
     );
     render(<App />);
-    const count = await screen.findByText("3 tasks");
+    const count = await screen.findByText("You have 3 tasks");
     expect(screen.getByRole("heading", { name: "Tasks" }).nextElementSibling).toBe(count);
   });
 
