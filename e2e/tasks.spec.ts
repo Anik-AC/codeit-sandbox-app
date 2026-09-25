@@ -9,6 +9,11 @@ test("the task list shows the demo tasks, newest first", async ({ page }) => {
   await expect(items.last()).toContainText("Write the project plan");
 });
 
+test("the page shows how many tasks there are", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("3 tasks")).toBeVisible();
+});
+
 test("unknown pages still load the app", async ({ page }) => {
   await page.goto("/some/deep/link");
   await expect(page.getByRole("heading", { name: "Tasks" })).toBeVisible();
