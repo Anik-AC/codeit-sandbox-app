@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Task } from "../shared/types.ts";
 import { fetchTasks } from "./api.ts";
+import { TaskCount } from "./TaskCount.tsx";
 import { TaskList } from "./TaskList.tsx";
 
 type State = { status: "loading" } | { status: "error"; message: string } | { status: "ready"; tasks: Task[] };
@@ -23,7 +24,12 @@ export function App() {
       <h1>Tasks</h1>
       {state.status === "loading" && <p>Loading...</p>}
       {state.status === "error" && <p role="alert">{state.message}</p>}
-      {state.status === "ready" && <TaskList tasks={state.tasks} />}
+      {state.status === "ready" && (
+        <>
+          <TaskCount count={state.tasks.length} />
+          <TaskList tasks={state.tasks} />
+        </>
+      )}
     </main>
   );
 }
