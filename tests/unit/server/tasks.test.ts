@@ -37,6 +37,12 @@ describe("the API", () => {
     expect(res.body).toEqual({ ok: true });
   });
 
+  it("responds to a ping", async () => {
+    const res = await request(createApp(openDb(":memory:"))).get("/api/ping");
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ pong: true });
+  });
+
   it("returns a JSON 404 for unknown API routes", async () => {
     const res = await request(createApp(openDb(":memory:"))).get("/api/nope");
     expect(res.status).toBe(404);

@@ -20,6 +20,10 @@ export function createApp(db: Db, options: AppOptions = {}): express.Express {
     res.json({ ok: true });
   });
 
+  app.get("/api/ping", (_req, res) => {
+    res.json({ pong: true });
+  });
+
   app.get("/api/tasks", (_req, res) => {
     res.json(listTasks(db));
   });
