@@ -10,3 +10,7 @@ export interface Task {
 export interface ApiError {
   error: string;
 }
+
+export interface Version {
+  version: string;
+}
