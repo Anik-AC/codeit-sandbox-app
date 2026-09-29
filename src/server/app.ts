@@ -2,10 +2,13 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import express, { type ErrorRequestHandler } from "express";
+import { z } from "zod";
 import type { ApiError, Version } from "../shared/types.ts";
 import type { Db } from "./db.ts";
-import { listTasks } from "./tasks.ts";
+import { getTask, listTasks } from "./tasks.ts";
 import { getVersion } from "./version.ts";
+
+const taskIdParam = z.coerce.number().int().positive();
 
 export interface AppOptions {
   /** Serve `dist/` (the built client) with a fallback to index.html. */
@@ -32,6 +35,22 @@ export function createApp(db: Db, options: AppOptions = {}): express.Express {
   app.get("/api/version", (_req, res) => {
     const body: Version = { version: getVersion() };
     res.json(body);
+  });
+
+  app.get("/api/tasks/:id", (req, res) => {
+    const parsed = taskIdParam.safeParse(req.params.id);
+    if (!parsed.success) {
+      const body: ApiError = { error: "Invalid task id" };
+      res.status(400).json(body);
+      return;
+    }
+    const task = getTask(db, parsed.data);
+    if (!task) {
+      const body: ApiError = { error: "Task not found" };
+      res.status(404).json(body);
+      return;
+    }
+    res.json(task);
   });
 
   app.use("/api", (_req, res) => {
