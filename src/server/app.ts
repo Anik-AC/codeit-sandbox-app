@@ -20,6 +20,10 @@ export function createApp(db: Db, options: AppOptions = {}): express.Express {
     res.json({ ok: true });
   });
 
+  app.get("/api/tasks/count", (_req, res) => {
+    res.json({ count: listTasks(db).length });
+  });
+
   app.get("/api/tasks", (_req, res) => {
     res.json(listTasks(db));
   });
