@@ -2,9 +2,10 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import express, { type ErrorRequestHandler } from "express";
-import type { ApiError } from "../shared/types.ts";
+import type { ApiError, Version } from "../shared/types.ts";
 import type { Db } from "./db.ts";
 import { listTasks } from "./tasks.ts";
+import { getVersion } from "./version.ts";
 
 export interface AppOptions {
   /** Serve `dist/` (the built client) with a fallback to index.html. */
@@ -26,6 +27,11 @@ export function createApp(db: Db, options: AppOptions = {}): express.Express {
 
   app.get("/api/tasks", (_req, res) => {
     res.json(listTasks(db));
+  });
+
+  app.get("/api/version", (_req, res) => {
+    const body: Version = { version: getVersion() };
+    res.json(body);
   });
 
   app.use("/api", (_req, res) => {
