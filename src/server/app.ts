@@ -17,7 +17,7 @@ export function createApp(db: Db, options: AppOptions = {}): express.Express {
   app.use(express.json());
 
   app.get("/api/health", (_req, res) => {
-    res.json({ ok: true });
+    res.json({ status: "ok" });
   });
 
   app.get("/api/ping", (_req, res) => {

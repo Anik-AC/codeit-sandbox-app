@@ -34,7 +34,8 @@ describe("GET /api/tasks", () => {
 describe("the API", () => {
   it("reports health", async () => {
     const res = await request(createApp(openDb(":memory:"))).get("/api/health");
-    expect(res.body).toEqual({ ok: true });
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ status: "ok" });
   });
 
   it("responds to a ping", async () => {
