@@ -20,3 +20,10 @@ export function listTasks(db: Db): Task[] {
     .all() as unknown as TaskRow[];
   return rows.map(toTask);
 }
+
+export function getTask(db: Db, id: number): Task | undefined {
+  const row = db.prepare("SELECT id, title, description, created_at FROM tasks WHERE id = ?").get(id) as
+    | TaskRow
+    | undefined;
+  return row ? toTask(row) : undefined;
+}

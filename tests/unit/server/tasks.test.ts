@@ -31,6 +31,38 @@ describe("GET /api/tasks", () => {
   });
 });
 
+describe("GET /api/tasks/:id", () => {
+  let db: Db;
+
+  beforeEach(() => {
+    db = openDb(":memory:");
+  });
+
+  it("returns 200 with the task when the id exists", async () => {
+    seed(db);
+    const reviewTask = DEMO_TASKS[2];
+    const list = await request(createApp(db)).get("/api/tasks");
+    const id = list.body[0].id;
+
+    const res = await request(createApp(db)).get(`/api/tasks/${id}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toMatchObject({ id, title: reviewTask?.title, description: reviewTask?.description });
+  });
+
+  it("returns 404 when no task has that id", async () => {
+    const res = await request(createApp(db)).get("/api/tasks/999");
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({ error: "Task not found" });
+  });
+
+  it("returns 400 when the id is not a number", async () => {
+    const res = await request(createApp(db)).get("/api/tasks/not-a-number");
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: "Invalid task id" });
+  });
+});
+
 describe("the API", () => {
   it("reports health", async () => {
     const res = await request(createApp(openDb(":memory:"))).get("/api/health");
