@@ -1,5 +1,17 @@
 # codeit-sandbox-app
 
+<!-- codeit:status:start -->
+| Metric | Value |
+|---|---|
+| Tickets shipped | 4 |
+| Median review loops | 0 |
+| Reviewer first-pass rate | 56% |
+| Latest eval pass@1 | 100% |
+| Latest eval pass^3 | 100% |
+
+<sub>Updated 2026-09-30 by CodeIt.</sub>
+<!-- codeit:status:end -->
+
 A small task tracker, and the target repo for [CodeIt](https://github.com/Anik-AC/codeit)'s agents. Today it can only **list tasks**. Everything else (creating, completing, due dates, filters, editing, dependencies) is planned in [CodeIt's sample plan](https://github.com/Anik-AC/codeit/blob/main/docs/samples/sample-plan.md) and will be built by the agents, one ticket at a time.
 
 ## Stack
