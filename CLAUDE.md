@@ -73,3 +73,9 @@ cover what you changed before opening or updating a pull request.
 - Commit secrets, `.env` files or credentials.
 - Change lockfiles unless you added or removed a dependency.
 - Approve npm install scripts for new dependencies without a stated reason.
+
+## Learned from feedback
+
+_Added by CodeIt's Learning agent from review feedback, through reviewed pull requests._
+
+- For every API endpoint you add or change, test the error paths as well as the success case: invalid input returns `400` and unknown IDs return `404`, and each test asserts the `{ "error": "<message>" }` body.
